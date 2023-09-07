@@ -1,45 +1,72 @@
 "use client"
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import Timer from './timer';
+import {motion} from 'framer-motion';
 
 function First() {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const tabs = ["Tab 1", "Tab 2", "Tab 3"];
+  const tabs = ["pomodoro", "Short break", "Long break"];
 
   const handleTabClick = (index) => {
     setSelectedTab(index);
   };
 
+  const toggleTimer = (isRunning) => {
+    setIsTimerRunning(isRunning);
+  };
+
   return (
-    <div>
-      <div className='flex justify-center items-center h-15vh'>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="mb-20">
         <img
           src="https://mcornale-pomodoro-app.netlify.app/static/media/logo.7479961e8a1563f1f8124a7cff89bef2.svg"
           alt="Logo"
-          className='my-20'
         />
       </div>
       <nav>
-        <div className="flex justify-center border-2 border-color-white w-fit px-40">
-          <div className="flex space-x-4">
+        <div className="w-fit py-80 border-white">
+          <ul className="relative flex list-none flex-wrap rounded-3xl bg-[#161932] p-1 " data-tabs="tabs" role="list">
             {tabs.map((tab, index) => (
-              <motion.div
+              <motion.li
                 key={index}
-                className={`tab ${selectedTab === index ? 'active-tab' : ''}`}
-                onClick={() => handleTabClick(index)}
-                whileHover={{ scale: 1.1 }}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0, backgroundColor: selectedTab === index ? '#f87070' : '' }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ ease: "linear", duration: 0.2 }}
+                className={`z-30 flex-auto rounded-3xl px-10 py-[10px]  text-center ${selectedTab === index ? '[#f87070]' : ''}`}
               >
-                {tab}
-              </motion.div>
+                <a
+                  className={` text-white text-slate-700 z-30 mb-0 flex w-full cursor-pointer items-center justify-center rounded-lg border-0 bg-inherit px-0 py-1 transition-all ease-in-out ${selectedTab === index ? 'text-white' : ''}`}
+                  onClick={() => handleTabClick(index)}
+                  role="tab"
+                  aria-selected={selectedTab === index}
+                >
+                  <span className="ml-1">{tab}</span>
+                </a>
+              </motion.li>
             ))}
-          </div>
-        </div>
-        <div className="content">
-          {/* Content for the selected tab goes here */}
-          {`Content for Tab ${selectedTab + 1}`}
+          </ul>
         </div>
       </nav>
+      <div className="p-4">
+        {tabs[selectedTab] === "pomodoro" && (
+          <div>
+            <Timer isTimerRunning={isTimerRunning} toggleTimer={toggleTimer} />
+          </div>
+        )}
+        {tabs[selectedTab] === "Short break" && (
+          <div>
+            <Timer isTimerRunning={isTimerRunning} toggleTimer={toggleTimer} />
+          </div>
+        )}
+        {tabs[selectedTab] === "Long break" && (
+          <div>
+            <Timer isTimerRunning={isTimerRunning} toggleTimer={toggleTimer} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
