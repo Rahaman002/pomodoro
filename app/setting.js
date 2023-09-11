@@ -7,9 +7,9 @@ import { GrClose } from "react-icons/gr";
 
 function Setting(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pomodoroValue, setPomodoroValue] = useState(props.pomodoro); // Initialize with props value
-  const [shortBreakValue, setShortBreakValue] = useState(props.sb); // Initialize with props value
-  const [longBreakValue, setLongBreakValue] = useState(props.lb); // Initialize with props value
+  const [pomodoroValue, setPomodoroValue] = useState(props.pomodoro); 
+  const [shortBreakValue, setShortBreakValue] = useState(props.sb); 
+  const [longBreakValue, setLongBreakValue] = useState(props.lb); 
   const [selectedFont, setSelectedFont] = useState(props.font);
 
   const openModal = () => {

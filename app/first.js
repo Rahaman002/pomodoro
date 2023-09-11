@@ -17,8 +17,7 @@ function First() {
   const [color, setColor] = useState('#f87070');
   const [font, setFont] = useState('Open Sans');
 
-  // Define the timeLeft state variable
-  const [timeLeft, setTimeLeft] = useState(pomodoro * 60); // Initialize with the Pomodoro duration
+  const [timeLeft, setTimeLeft] = useState(pomodoro * 60); 
 
   const tabs = ["Pomodoro", "Short break", "Long break"];
   const tabDurations = [pomodoro, sb, lb];
@@ -29,8 +28,8 @@ function First() {
 
   useEffect(() => {
     if (isTimerRunning && timeLeft === 0 && selectedTab === 0) {
-      setSelectedTab(1); // Switch to Short Break tab
-      setIsTimerRunning(false); // Stop the timer
+      setSelectedTab(1); 
+      setIsTimerRunning(false); 
       toast.info('Pomodoro completed! Starting Short Break', {
         position: "top-right",
         autoClose: 3000,
