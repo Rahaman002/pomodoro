@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { motion, useAnimation } from 'framer-motion';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
   const [timeLeft, setTimeLeft] = useState(time * 60);
@@ -45,7 +47,16 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
   const checkuser = () => {
     const user = localStorage.getItem("user");
     if (user==="null" || user===null|| user==="undefined") {
-      console.log("please sign in");
+      toast.info('Please SignIn', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       
     } else {
       
@@ -84,6 +95,18 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
           {isTimerRunning ? 'Pause' : 'Start'}
         </motion.button>
       </div>
+      <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
     </div>
   );
 };

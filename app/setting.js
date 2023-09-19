@@ -3,6 +3,8 @@
 import React, { useState, useRef } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 function Setting(props) {
 
@@ -56,7 +58,16 @@ function Setting(props) {
     const user = localStorage.getItem("user");
     console.log(user);
     if (user==="null" || user===null|| user==="undefined") {
-      console.log("please sign in");
+      toast.info('Please SignIn', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       
     } else {
       openModal();
@@ -233,6 +244,18 @@ function Setting(props) {
           </div>
         </div>
       </div>
+      <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
     </div>
   );
 }
