@@ -1,5 +1,6 @@
 "use client"
 
+
 import React, { useState, useEffect } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -32,7 +33,6 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
     return () => clearInterval(intervalId);
   }, [isTimerRunning, timeLeft, toggleTimer, controls]);
 
-  // Update timeLeft when the time prop changes
   useEffect(() => {
     setTimeLeft(time * 60);
   }, [time]);
@@ -40,6 +40,16 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
   const handleProgressBarClick = () => {
     if (!isTimerRunning) {
       toggleTimer(true);
+    }
+  };
+  const checkuser = () => {
+    const user = localStorage.getItem("user");
+    if (user==="null" || user===null|| user==="undefined") {
+      console.log("please sign in");
+      
+    } else {
+      
+      toggleTimer(!isTimerRunning)
     }
   };
 
@@ -62,7 +72,7 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
           />
         </div>
         <motion.button
-          onClick={() => toggleTimer(!isTimerRunning)}
+          onClick={checkuser}
           whileTap={{ scale: 0.95 }}
           className="text-white font-semibold py-2 my-[50px] px-4 rounded-full focus:outline-none focus:shadow-outline"
           style={{

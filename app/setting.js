@@ -1,11 +1,11 @@
 "use client";
-// Setting.js
-// Setting.js
+
 import React, { useState, useRef } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
 
 function Setting(props) {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pomodoroValue, setPomodoroValue] = useState(props.pomodoro); 
   const [shortBreakValue, setShortBreakValue] = useState(props.sb); 
@@ -48,16 +48,27 @@ function Setting(props) {
    
     props.setFont(selectedFont);
 
-    console.log(pomodoroValue); // Now it should print the updated value
+    console.log(pomodoroValue); 
 
     closeModal();
   };
+  const checkuser = () => {
+    const user = localStorage.getItem("user");
+    console.log(user);
+    if (user==="null" || user===null|| user==="undefined") {
+      console.log("please sign in");
+      
+    } else {
+      openModal();
+    }
+  };
+  
 
   return (
     <div className="">
       <AiFillSetting
         className="w-12 h-9 mb-10 cursor-pointer"
-        onClick={openModal}
+        onClick={checkuser}
       />
 
       <div
@@ -87,11 +98,11 @@ function Setting(props) {
                       type="number"
                       id="pomodoro"
                       max={60}
-                      value={pomodoroValue} // Use the state value
+                      value={pomodoroValue} 
                       min={0}
                       className="border rounded-md p-1 w-full"
                       ref={pomodoroRef}
-                      onChange={handlePomodoroChange} // Handle input change
+                      onChange={handlePomodoroChange} 
                     />
                   </div>
                 </div>
@@ -101,12 +112,12 @@ function Setting(props) {
                     <input
                       type="number"
                       max={60}
-                      value={shortBreakValue} // Use the state value
+                      value={shortBreakValue} 
                       min={0}
                       id="shortBreak"
                       className="border rounded-md p-1 w-full"
                       ref={shortBreakRef}
-                      onChange={handleShortBreakChange} // Handle input change
+                      onChange={handleShortBreakChange} 
                     />
                   </div>
                 </div>
@@ -116,12 +127,12 @@ function Setting(props) {
                     <input
                       type="number"
                       min={0}
-                      value={longBreakValue} // Use the state value
+                      value={longBreakValue} 
                       max={60}
                       id="longBreak"
                       className="border rounded-md p-1 w-full"
                       ref={longBreakRef}
-                      onChange={handleLongBreakChange} // Handle input change
+                      onChange={handleLongBreakChange} 
                     />
                   </div>
                 </div>
@@ -137,8 +148,8 @@ function Setting(props) {
                     id="font-sans"
                     className="hidden"
                     ref={fontRef}
-                    checked={selectedFont === "sans"} // Use checked attribute
-                    onChange={handleFontChange} // Handle font change
+                    checked={selectedFont === "sans"} 
+                    onChange={handleFontChange} 
                   />
                   <label
                     htmlFor="font-sans"
@@ -156,8 +167,8 @@ function Setting(props) {
                     id="font-mono"
                     className="hidden"
                     ref={fontRef}
-                    checked={selectedFont === "mono"} // Use checked attribute
-                    onChange={handleFontChange} // Handle font change
+                    checked={selectedFont === "mono"} 
+                    onChange={handleFontChange} 
                   />
                   <label
                     htmlFor="font-mono"
@@ -175,8 +186,8 @@ function Setting(props) {
                     id="font-serif"
                     className="hidden"
                     ref={fontRef}
-                    checked={selectedFont === "serif"} // Use checked attribute
-                    onChange={handleFontChange} // Handle font change
+                    checked={selectedFont === "serif"} 
+                    onChange={handleFontChange} 
                   />
                   <label
                     htmlFor="font-serif"
@@ -192,9 +203,9 @@ function Setting(props) {
               <hr />
               <div className="w-full flex justify-between ">
                 Color
-                <div className="">
+                <div >
                   <span
-                    className={`rounded-full bg-[#3558f2] w-2 px-3 py-1 h-2 mx-2 ${
+                    className={`rounded-full bg-[#3558f2] w-2 px-3  py-1 h-2 mx-2 ${
                       props.color === '#3558f2' ? 'bg-[#3558f2]' : ''
                     }`}
                     onClick={() => props.setColor('#3558f2')}
@@ -216,7 +227,7 @@ function Setting(props) {
             </div>
           </div>
           <div className="modal-footer p-4 border-t">
-            <button onClick={SaveModal} className="btn">
+            <button onClick={SaveModal} className="btn bg-cyan-400 hover:scale-125 p-4 rounded-2xl hover:bg-black hover:text-white">
               Save
             </button>
           </div>

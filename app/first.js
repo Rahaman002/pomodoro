@@ -6,8 +6,11 @@ import { motion } from 'framer-motion';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Setting from './setting';
+import {auth,provider} from './firebase-config';
+import { signInWithPopup,signOut } from 'firebase/auth';
 
 function First() {
+  const [user,setUser]=useState(null);
   const [selectedTab, setSelectedTab] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
@@ -22,9 +25,7 @@ function First() {
   const tabs = ["Pomodoro", "Short break", "Long break"];
   const tabDurations = [pomodoro, sb, lb];
 
-  useEffect(() => {
-    console.log(font);
-  }, [font]);
+
 
   useEffect(() => {
     if (isTimerRunning && timeLeft === 0 && selectedTab === 0) {
@@ -47,7 +48,6 @@ function First() {
     setIsTimerRunning(isRunning);
   };
 
-  // Define the handleTabClick function
   const handleTabClick = (index) => {
     if (!isTimerRunning) {
       setSelectedTab(index);
@@ -64,8 +64,56 @@ function First() {
       });
     }
   };
+  const SignIn = async ()=>{
+    try{
+      const res = await signInWithPopup(auth,provider);
+      setUser(res.user.uid);
+      
+    }
+    catch(err)
+    {
+      console.log(err);
+    }
+  }
+
+  useEffect(()=>{
+    if (user==="null" || user===null || user==="undefined") {
+     return;
+    } 
+    localStorage.setItem("user",user);
+  }, [user])
+  useEffect(()=>{
+    
+    setUser(localStorage?.user);
+  }, [])
+
+  const signout=async ()=>{
+    
+    await signOut(auth).then(() => {
+          localStorage.removeItem("user");
+          console.log("Signed out successfully");
+          setUser(null)
+      }).catch((error) => {
+      console.log(error)
+      });
+  }
 
   return (
+    <>
+<div className="flex justify-end gap-4 mr-4 mt-4">
+  <button
+    onClick={user ? signout : SignIn}
+    type="button"
+    className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+  >
+    {user ? "Sign Out" : "Sign In"}
+  </button>
+</div>
+
+
+
+
+   
     <div className="flex flex-col items-center justify-center">
       <div className="mt-[50px]">
         <img
@@ -151,6 +199,7 @@ function First() {
         font={font}
       />
     </div>
+    </>
   );
 }
 
