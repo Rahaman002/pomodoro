@@ -1,12 +1,13 @@
-"use client"
+"use client"; 
 
+import React, { useState, useEffect } from "react";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { motion, useAnimation } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+ 
 
-import React, { useState, useEffect } from 'react';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import { motion, useAnimation } from 'framer-motion';
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
 
 const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
   const [timeLeft, setTimeLeft] = useState(time * 60);
@@ -14,7 +15,6 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
 
   useEffect(() => {
     let intervalId;
-
     if (isTimerRunning && timeLeft > 0) {
       intervalId = setInterval(() => {
         setTimeLeft((prevTimeLeft) => {
@@ -46,8 +46,8 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
   };
   const checkuser = () => {
     const user = localStorage.getItem("user");
-    if (user==="null" || user===null|| user==="undefined") {
-      toast.info('Please SignIn', {
+    if (user === "null" || user === null || user === "undefined") {
+      toast.info("Please SignIn", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -56,11 +56,9 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
-      
+      });
     } else {
-      
-      toggleTimer(!isTimerRunning)
+      toggleTimer(!isTimerRunning);
     }
   };
 
@@ -68,17 +66,21 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
   const seconds = timeLeft % 60;
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 relative bg-[#161932] rounded-full" style={{ boxShadow: "-5rem -5rem 10rem 0 #272c5a, 5rem 5rem 10rem 0 #121530" }}>
+    <div
+      className="flex flex-col items-center justify-center p-6 relative bg-[#161932] rounded-full"
+      style={{
+        boxShadow: "-5rem -5rem 10rem 0 #272c5a, 5rem 5rem 10rem 0 #121530",
+      }}
+    >
       <div className="">
         <div className="cursor-pointer " onClick={handleProgressBarClick}>
           <CircularProgressbar
             value={((time * 60 - timeLeft) / (time * 60)) * 100}
-            text={`${minutes}:${seconds.toString().padStart(2, '0')}`}
+            text={`${minutes}:${seconds.toString().padStart(2, "0")}`}
             strokeWidth={5}
             styles={buildStyles({
               pathColor: color,
               textColor: color,
-              
             })}
           />
         </div>
@@ -87,26 +89,26 @@ const Timer = ({ isTimerRunning, toggleTimer, time, color }) => {
           whileTap={{ scale: 0.95 }}
           className="text-white font-semibold py-2 my-[50px] px-4 rounded-full focus:outline-none focus:shadow-outline"
           style={{
-            position: 'absolute',
-            top: '50%',
-            left: '41%',
+            position: "absolute",
+            top: "50%",
+            left: "41%",
           }}
         >
-          {isTimerRunning ? 'Pause' : 'Start'}
+          {isTimerRunning ? "Pause" : "Start"}
         </motion.button>
       </div>
       <ToastContainer
-position="top-right"
-autoClose={3000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

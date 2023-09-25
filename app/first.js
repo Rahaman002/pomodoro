@@ -8,6 +8,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Setting from './setting';
 import {auth,provider} from './firebase-config';
 import { signInWithPopup,signOut } from 'firebase/auth';
+import {BsGithub} from "react-icons/bs"
+import Link from 'next/link';
+
 
 function First() {
   const [user,setUser]=useState(null);
@@ -108,6 +111,7 @@ function First() {
   >
     {user ? "Sign Out" : "Sign In"}
   </button>
+  <Link href="https://github.com/Rahaman002/pomodoro"><BsGithub className="h-[40px] w-[60px]"/></Link>
 </div>
 
 
